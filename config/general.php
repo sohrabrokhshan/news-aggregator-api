@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'client_app_url' => env('CLIENT_APP_URL'),
     'clients' => [
         'guardian' => [
             'url' => env('GUARDIAN_URL'),

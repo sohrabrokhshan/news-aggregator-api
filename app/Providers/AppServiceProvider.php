@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\TelescopeServiceProvider;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,5 +16,14 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot(): void {}
+    public function boot(): void
+    {
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            $baseUrl = config('general.client_app_url');
+            return  $baseUrl . "/auth/reset-password?token=$token&email=$user->email";
+        });
+
+        Route::pattern('id', '[0-9]+');
+        Route::pattern('slug', '[a-z0-9]+');
+    }
 }

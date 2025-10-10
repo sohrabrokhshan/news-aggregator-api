@@ -17,7 +17,7 @@ class NewsAPIArticleService
         private readonly AuthorService $authorService,
     ) {}
 
-    public function importNewArticles(): array
+    public function importNewArticles(): void
     {
         $categories = [
             'business',
@@ -39,7 +39,6 @@ class NewsAPIArticleService
         $this->sourceService->bulkInsert($data['sources']);
         $this->authorService->bulkInsert($data['authors']);
         $this->insertNewArticles($data['articles']);
-        return $data['articles'];
     }
 
     private function extractData(array $categoriesData): array
