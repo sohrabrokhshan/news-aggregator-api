@@ -17,6 +17,7 @@ class Client extends Authenticatable implements JWTSubject
     {
         return [
             'password' => 'hashed',
+            'preferences' => 'object',
         ];
     }
 

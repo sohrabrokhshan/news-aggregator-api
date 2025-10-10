@@ -18,3 +18,12 @@ Route::prefix('auth')
         Route::post('logout', 'logout');
         Route::post('change-password', 'changePassword');
     });
+
+Route::prefix('profile')
+    ->controller(Client\ProfileController::class)
+    ->group(function () {
+        Route::get('/', 'show');
+        Route::put('/', 'update');
+        Route::put('set-preference', 'setPreferences');
+        Route::delete('/', 'delete');
+    });
