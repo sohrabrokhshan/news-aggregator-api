@@ -13,6 +13,7 @@ class GuardianClient extends Client
     public function getLatestArticles(int $page): array
     {
         return $this->sendGet('search', [
+            'api-key' => $this->apiKey,
             'lang' => 'en',
             'type' => 'article',
             'from-date' => now()->toDateString(),

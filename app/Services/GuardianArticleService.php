@@ -18,11 +18,9 @@ class GuardianArticleService
 
     public function importNewArticles(): void
     {
-        $rows = [];
-        $totalPages = 1;
         $firstResponse = $this->guardianClient->getLatestArticles(1);
         $totalPages = $firstResponse['response']['pages'];
-        $rows = array_merge($rows, $firstResponse['response']['results']);
+        $rows = $firstResponse['response']['results'];
 
         for ($page = 2; $page <= $totalPages; $page++) {
             $response = $this->guardianClient->getLatestArticles($page);
@@ -50,6 +48,11 @@ class GuardianArticleService
             $sources[$sourceSlug] = $row['fields']['publication'];
 
             $title = Str::limit($row['webTitle'], 255);
+
+            if (in_array($title, array_column($articles, 'title'))) {
+                continue;
+            }
+
             $articles[] = [
                 'slug' => Str::slug($title),
                 'category_slug' => $categorySlug,
