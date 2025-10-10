@@ -15,12 +15,11 @@ abstract class Client
     protected string $url;
     protected string $apiKey;
     protected $options = [
-        'verify' => true,
+        'verify' => false,
     ];
 
     public function sendGet(string $path, array $data = []): array
     {
-        $data = [...$data, 'api-key' => $this->apiKey];
         return $this->sendRequest()
             ->get("{$this->url}/$path", $data)->json();
     }

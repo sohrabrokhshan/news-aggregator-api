@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('headline');
             $table->text('content');
-            $table->string('image_url')->nullable();
+            $table->text('image_url')->nullable(); // some images were long URLs
             $table->datetime('published_at');
             $table->string('resource_url');
             $table->string('resource');
