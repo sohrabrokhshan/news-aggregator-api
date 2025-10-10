@@ -33,14 +33,27 @@ class UserService implements TrashModelServiceInterface
         return $this->store($client, $data);
     }
 
+    public function setPreferences(Client $client, array $preferences): void
+    {
+        $client->preferences = $preferences;
+        $client->save();
+    }
+
     private function store(Client $client, array $data): Client
     {
         $oldImage = $client->image;
+        $newImage = $oldImage;
+
+        if (key_exists('image', $data) && is_null($data['image'])) {
+            $newImage = null;
+        } else if (!empty($data['image'])) {
+            $newImage = $this->fileUploader->upload($data['image']);
+        }
 
         $client->first_name = $data['first_name'];
         $client->last_name = $data['last_name'];
         $client->email = $data['email'];
-        $client->image = empty($data['image']) ? $oldImage : $this->fileUploader->upload($data['image']);
+        $client->image = $newImage;
         $client->save();
 
         if ($oldImage && $oldImage !== $client->image) {
