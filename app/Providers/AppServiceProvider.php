@@ -24,6 +24,5 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Route::pattern('id', '[0-9]+');
-        Route::pattern('slug', '[a-z0-9]+');
     }
 }

@@ -21,3 +21,10 @@ Route::prefix('categories')
         Route::get('/', 'getList');
         Route::get('{slug}', 'show');
     });
+
+Route::prefix('articles')
+    ->controller(Public\ArticleController::class)
+    ->group(function () {
+        Route::get('/', 'getList');
+        Route::get('{resource}/{slug}', 'show');
+    });
