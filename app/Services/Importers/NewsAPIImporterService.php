@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Importers;
 
+use App\Models\Source;
 use App\Enums\Resource;
-use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Clients\NewsAPIClient;
+use App\Models\Author;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class NewsAPIArticleService
+class NewsAPIImporterService
 {
     public function __construct(
         private readonly NewsAPIClient $newsApiClient,
-        private readonly CategoryService $categoryService,
-        private readonly SourceService $sourceService,
-        private readonly AuthorService $authorService,
+        private readonly MetadataImporterService $metadataImporterService,
+        private readonly ArticleImporterService $articleImporterService,
     ) {}
 
     public function importNewArticles(): void
@@ -34,14 +36,16 @@ class NewsAPIArticleService
             $rows[$category] = $this->getCategoryData($category);
         }
 
-        $data = $this->extractData($rows);
-        $this->categoryService->bulkInsert(array_combine($categories, $categories));
-        $this->sourceService->bulkInsert($data['sources']);
-        $this->authorService->bulkInsert($data['authors']);
-        $this->insertNewArticles($data['articles']);
+        $data = $this->mapData($rows);
+        DB::transaction(function () use ($data, $categories) {
+            $this->metadataImporterService->import(Category::class, array_combine($categories, $categories));
+            $this->metadataImporterService->import(Source::class, $data['sources']);
+            $this->metadataImporterService->import(Author::class, $data['authors']);
+            $this->articleImporterService->import($data['articles'], Resource::NEWS_API);
+        });
     }
 
-    private function extractData(array $categoriesData): array
+    private function mapData(array $categoriesData): array
     {
         $sources = [];
         $authors = [];
@@ -93,24 +97,6 @@ class NewsAPIArticleService
             'authors' => $authors,
             'articles' => $articles,
         ];
-    }
-
-    private function insertNewArticles(array $articles): void
-    {
-        $newRows = [];
-        $existedSlugs = Article::where('resource', Resource::NEWS_API->value)
-            ->whereIn('slug', array_column($articles, 'slug'))
-            ->select('slug')
-            ->pluck('slug')
-            ->toArray();
-
-        foreach ($articles as $article) {
-            if (!in_array($article['slug'], $existedSlugs)) {
-                $newRows[] = $article;
-            }
-        }
-
-        Article::insert($newRows);
     }
 
     private function getCategoryData(string $category): array

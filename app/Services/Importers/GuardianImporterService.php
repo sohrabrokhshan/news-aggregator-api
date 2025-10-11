@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Importers;
 
-use Illuminate\Support\Str;
-use App\Clients\GuardianClient;
+use App\Models\Source;
 use App\Enums\Resource;
-use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use App\Clients\GuardianClient;
+use Illuminate\Support\Facades\DB;
 
-class GuardianArticleService
+class GuardianImporterService
 {
     public function __construct(
         private readonly GuardianClient $guardianClient,
-        private readonly CategoryService $categoryService,
-        private readonly SourceService $sourceService,
+        private readonly MetadataImporterService $metadataImporterService,
+        private readonly ArticleImporterService $articleImporterService,
     ) {}
 
     public function importNewArticles(): void
@@ -27,13 +29,15 @@ class GuardianArticleService
             $rows = array_merge($rows, $response['response']['results']);
         }
 
-        $data = $this->extractData($rows);
-        $this->categoryService->bulkInsert($data['categories']);
-        $this->sourceService->bulkInsert($data['sources']);
-        $this->insertNewArticles($data['articles']);
+        $data = $this->mapData($rows);
+        DB::transaction(function () use ($data) {
+            $this->metadataImporterService->import(Category::class, $data['categories']);
+            $this->metadataImporterService->import(Source::class, $data['sources']);
+            $this->articleImporterService->import($data['articles'], Resource::THE_GUARDING);
+        });
     }
 
-    private function extractData(array $rows): array
+    private function mapData(array $rows): array
     {
         $categories = [];
         $sources = [];
@@ -74,23 +78,5 @@ class GuardianArticleService
             'sources' => $sources,
             'articles' => $articles
         ];
-    }
-
-    private function insertNewArticles(array $articles): void
-    {
-        $newRows = [];
-        $existedSlugs = Article::where('resource', Resource::THE_GUARDING->value)
-            ->whereIn('slug', array_column($articles, 'slug'))
-            ->select('slug')
-            ->pluck('slug')
-            ->toArray();
-
-        foreach ($articles as $article) {
-            if (!in_array($article['slug'], $existedSlugs)) {
-                $newRows[] = $article;
-            }
-        }
-
-        Article::insert($newRows);
     }
 }
