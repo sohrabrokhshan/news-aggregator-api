@@ -11,5 +11,8 @@ return [
             'url' => env('NEWSAPI_URL'),
             'api-key' => env('NEWSAPI_API_KEY'),
         ],
+        'bbc-feeds' => [
+            'url' => env('BBC_FEEDS_URL'),
+        ],
     ],
 ];

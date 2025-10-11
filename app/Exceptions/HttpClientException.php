@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 
 class HttpClientException extends ServerException
 {
-    public function __construct(string $message, string $code)
+    public function __construct(string $message, ?string $code = null)
     {
         parent::__construct($message);
         $this->code = $code;

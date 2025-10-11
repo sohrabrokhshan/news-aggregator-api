@@ -9,6 +9,7 @@ class MetadataImporterService
         $newRows = [];
         $existedSlugs = $metaClass::whereIn('slug', array_keys($data))
             ->select('slug')
+            ->lockForUpdate()
             ->pluck('slug')
             ->toArray();
 
