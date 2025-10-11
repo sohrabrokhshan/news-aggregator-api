@@ -61,7 +61,9 @@ class ProfileController extends Controller
             'sources' => ['nullable', 'array', 'max:100'],
             'sources.*' => ['string', 'max:255', 'distinct'],
             'categories' => ['nullable', 'array', 'max:100'],
-            'categories.*' => ['string', 'max:255', 'distinct']
+            'categories.*' => ['string', 'max:255', 'distinct'],
+            'authors' => ['nullable', 'array', 'max:100'],
+            'authors.*' => ['string', 'max:255', 'distinct']
         ]);
     }
 }

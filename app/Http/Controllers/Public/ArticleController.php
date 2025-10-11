@@ -34,6 +34,8 @@ class ArticleController extends Controller
         return $request->validate([
             'resource' => ['nullable', Rule::in(Resource::values())],
             'search' => ['nullable', 'string', 'max:255'],
+            'start_date' => ['nullable', 'date', 'before_or_equal:today'],
+            'end_date' => ['nullable', 'date', 'after:start_date', 'before_or_equal:today'],
             'categories' => ['nullable', 'array', 'max:20'],
             'categories.*' => ['required', 'string', 'max:255'],
             'sources' => ['nullable', 'array', 'max:20'],

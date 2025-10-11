@@ -38,6 +38,14 @@ class ArticleService
             $query->where('resource', $filters['resource']);
         }
 
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('published_at', '>=', $filters['start_date']);
+        }
+
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('published_at', '<', $filters['end_date']);
+        }
+
         return $this->pagination->setQuery($query)->paginate($pageSize);
     }
 

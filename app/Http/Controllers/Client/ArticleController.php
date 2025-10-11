@@ -17,6 +17,7 @@ class ArticleController extends Controller
     {
         return $this->sendResponse($this->articleService->getList(
             auth('client')->user(),
+            $this->validateGetList($request),
             $request->page_size
         ));
     }
@@ -25,5 +26,13 @@ class ArticleController extends Controller
     {
         $resource = str_replace('-', ' ', $resource);
         return $this->sendResponse($this->articleService->show($resource, $slug));
+    }
+
+    private function validateGetList(Request $request): array
+    {
+        return $request->validate([
+            'start_date' => ['nullable', 'date', 'before_or_equal:today'],
+            'end_date' => ['nullable', 'date', 'after:start_date', 'before_or_equal:today'],
+        ]);
     }
 }
