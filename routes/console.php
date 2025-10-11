@@ -1,8 +1,13 @@
 <?php
 
-use App\Console\Commands\ImportArticles;
 use Illuminate\Support\Facades\Schedule;
+use App\Console\Commands\ImportNewsApiArticles;
+use App\Console\Commands\ImportGuardianArticles;
 
-Schedule::command(ImportArticles::class, ['guardian'])
+Schedule::command(ImportGuardianArticles::class)
+    ->everyTwoHours()
+    ->runInBackground();
+
+Schedule::command(ImportNewsApiArticles::class)
     ->everyTwoHours()
     ->runInBackground();

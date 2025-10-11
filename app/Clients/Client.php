@@ -7,7 +7,6 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\PendingRequest;
 use App\Exceptions\HttpClientException;
-use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Log;
 
 abstract class Client
@@ -15,7 +14,7 @@ abstract class Client
     protected string $url;
     protected string $apiKey;
     protected $options = [
-        'verify' => false,
+        'verify' => true,
     ];
 
     public function sendGet(string $path, array $data = []): array
@@ -33,25 +32,6 @@ abstract class Client
                 'response' => $response->json(),
             ]);
             throw new HttpClientException($e->getMessage(), $e->getCode());
-        });
-    }
-
-    // Todo: Use this.
-    public function sendConcurrentGetRequest(array $urls): array
-    {
-        return Http::pool(function (Pool $pool) use ($urls) {
-            $requests = [];
-
-            foreach ($urls as $url) {
-                $request[$url] = $pool->withOptions($this->options)
-                    ->acceptJson()
-                    ->withToken()
-                    ->throw(function (Response $response, RequestException $e) {
-                        throw new HttpClientException($e->getMessage(), $e->getCode());
-                    })->get($url);
-            }
-
-            return $requests;
         });
     }
 }
