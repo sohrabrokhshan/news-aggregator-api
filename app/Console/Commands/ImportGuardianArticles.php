@@ -18,6 +18,8 @@ class ImportGuardianArticles extends Command
 
     public function handle()
     {
+        $this->info('Importing new articles from the guardian.');
         $this->importerService->importNewArticles();
+        $this->info('Importing articles from the guardian completed.');
     }
 }

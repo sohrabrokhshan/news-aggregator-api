@@ -18,6 +18,8 @@ class ImportNewsApiArticles extends Command
 
     public function handle()
     {
+        $this->info('Importing new articles from the news api.');
         $this->importerService->importNewArticles();
+        $this->info('Importing articles from the news api completed.');
     }
 }
