@@ -27,3 +27,10 @@ Route::prefix('profile')
         Route::put('set-preference', 'setPreferences');
         Route::delete('/', 'delete');
     });
+
+Route::prefix('articles')
+    ->controller(Client\ArticleController::class)
+    ->group(function () {
+        Route::get('/', 'getList');
+        Route::get('{resource}/{slug}', 'show');
+    });

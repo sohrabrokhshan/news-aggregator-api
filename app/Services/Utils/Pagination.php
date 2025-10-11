@@ -14,7 +14,9 @@ class Pagination
     {
         $perPage = $perPage && $perPage <= 100 ? $perPage : 10;
         $total = $this->query->count();
-        $items = $this->query->offset($this->getPaginationOffset($perPage))->limit($perPage)->get();
+        $items = $total === 0 ?
+            [] :
+            $this->query->offset($this->getPaginationOffset($perPage))->limit($perPage)->get();
 
         $pagination = [
             'data' => $items,
