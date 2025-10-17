@@ -1,0 +1,1014 @@
+{
+	"info": {
+		"_postman_id": "327f4304-4f2b-4246-a3d0-0ea37de87916",
+		"name": "News Aggregator API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17696548"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"if (response.token) {\r",
+											"    pm.environment.set(\"CLIENT_TOKEN\", response.token);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "first_name",
+											"value": "sohrab1",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "rokhshan1",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "sohrabrokhshan1@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Sohrabrokhshan0@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"description": "is optioanl",
+											"type": "file",
+											"src": "/C:/Users/sohra/Desktop/DB Schema Design.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/auth/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"if (response.token) {\r",
+											"   pm.environment.set(\"CLIENT_TOKEN\", response.token);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "sohrabrokhshan@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Sohrabrokhshan0@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/auth/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/client/auth/logout",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change-password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "current_password",
+											"value": "Sohrabrokhshan1@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "new_password",
+											"value": "Sohrabrokhshan0@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/auth/change-password",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "send-reset-pass-link",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "sohrabrokhshan@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/auth/send-reset-password-link",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"send-reset-password-link"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset-password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"if (response.token) {\r",
+											"    pm.environment.set(\"CLIENT_TOKEN\", response.token);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "Application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "sohrabrokhshan@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "token",
+											"value": "247682248ffedd1edb25725db2eb1eedd6d3451195c8eb7a93a0c8a77e2a203d",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Sohrabrokhshan0@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/auth/reset-password",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"auth",
+										"reset-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/client/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "first_name",
+											"value": "sohrab updated",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "rokhshan3",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "sohrabrokhshan+3@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/sohra/Desktop/Jobs DB Design.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "set preferences",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "sources[0]",
+											"value": "9to5mac",
+											"type": "text"
+										},
+										{
+											"key": "sources[1]",
+											"value": "cbs-news",
+											"type": "text"
+										},
+										{
+											"key": "sources[2]",
+											"value": "cnn",
+											"type": "text"
+										},
+										{
+											"key": "categories[0]",
+											"value": "football",
+											"type": "text"
+										},
+										{
+											"key": "categories[1]",
+											"value": "news",
+											"type": "text"
+										},
+										{
+											"key": "categories[2]",
+											"value": "business",
+											"type": "text"
+										},
+										{
+											"key": "authors[0]",
+											"value": "aaron-beard",
+											"type": "text"
+										},
+										{
+											"key": "authors[1]",
+											"value": "abbey-white-james-hibberd",
+											"type": "text"
+										},
+										{
+											"key": "authors[2]",
+											"value": "abc-news-breaking-news-latest-news-and-videos",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/client/profile/set-preference",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"profile",
+										"set-preference"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/client/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Articles",
+					"item": [
+						{
+							"name": "list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/client/articles?page_size=20&page=1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"articles"
+									],
+									"query": [
+										{
+											"key": "page_size",
+											"value": "20"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "start_date",
+											"value": "2025-10-10",
+											"disabled": true
+										},
+										{
+											"key": "end_date",
+											"value": "2025-10-11",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/client/articles/News-API/marjorie-taylor-greene-putting-blame-on-gop-congressional-leaders-for-shutdown-politico",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"client",
+										"articles",
+										"News-API",
+										"marjorie-taylor-greene-putting-blame-on-gop-congressional-leaders-for-shutdown-politico"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{CLIENT_TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "Sources",
+					"item": [
+						{
+							"name": "search list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/sources/search-list?term=bbc",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"sources",
+										"search-list"
+									],
+									"query": [
+										{
+											"key": "ids[0]",
+											"value": "247sports",
+											"disabled": true
+										},
+										{
+											"key": "ids[1]",
+											"value": "9to5Mac",
+											"disabled": true
+										},
+										{
+											"key": "term",
+											"value": "bbc"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authors",
+					"item": [
+						{
+							"name": "search list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/authors/search-list?term=Jain",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"authors",
+										"search-list"
+									],
+									"query": [
+										{
+											"key": "ids[0]",
+											"value": "abha-jain",
+											"disabled": true
+										},
+										{
+											"key": "ids[1]",
+											"value": "aj-dellinger",
+											"disabled": true
+										},
+										{
+											"key": "term",
+											"value": "Jain"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/categories",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/categories/books",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"categories",
+										"books"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Articles",
+					"item": [
+						{
+							"name": "list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/articles",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"articles"
+									],
+									"query": [
+										{
+											"key": "page_size",
+											"value": "20",
+											"description": "max to 100",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "categories[0]",
+											"value": "entertainment",
+											"disabled": true
+										},
+										{
+											"key": "categories[1]",
+											"value": "business",
+											"disabled": true
+										},
+										{
+											"key": "sources[0]",
+											"value": "usa-today",
+											"disabled": true
+										},
+										{
+											"key": "sources[1]",
+											"value": "hollywood-reporter",
+											"disabled": true
+										},
+										{
+											"key": "authors[0]",
+											"value": "zac-ntim",
+											"disabled": true
+										},
+										{
+											"key": "authors[1]",
+											"value": "erik-hayden",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "TikTok-style",
+											"disabled": true
+										},
+										{
+											"key": "resource",
+											"value": "News API",
+											"description": "The Guardian | News API | BBC",
+											"disabled": true
+										},
+										{
+											"key": "start_date",
+											"value": "2025-10-10",
+											"disabled": true
+										},
+										{
+											"key": "end_date",
+											"value": "2025-10-11",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/articles/The-Guardian/democrats-refuse-to-fold-over-shutdown-as-republican-outrage-builds",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"articles",
+										"The-Guardian",
+										"democrats-refuse-to-fold-over-shutdown-as-republican-outrage-builds"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
